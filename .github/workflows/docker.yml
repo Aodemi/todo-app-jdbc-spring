@@ -31,9 +31,20 @@ jobs:
     - name: Check Maven Version
       run: mvn -version
 
+    - name: Debug workflow + mvn cmd
+      run: |
+        echo "Branch: $GITHUB_REF"
+        echo "Actor: $GITHUB_ACTOR"
+        echo "Workflow file:"
+        ls -la .github/workflows
+        echo "---- docker.yml ----"
+        sed -n '1,200p' .github/workflows/docker.yml
+
+
     - name: Maven build
-      run: mvn clean package -DskipTests
+      run: mvn -X clean package -DskipTests -Dspring-boot.repackage.skip=true
       working-directory: src/api
+
 
     - name: Login to GHCR
       uses: docker/login-action@v3
