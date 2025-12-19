@@ -7,7 +7,7 @@ RUN apt-get update \
 COPY pom.xml .
 RUN mvn dependency:go-offline
 COPY src ./src
-RUN mvn -U clean package -DskipTests
+RUN mvn -U clean package -DskipTests -Dspring-boot.repackage.skip=true
 
 FROM eclipse-temurin:25-jre-jammy
 WORKDIR /app
